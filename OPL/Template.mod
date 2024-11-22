@@ -17,24 +17,7 @@ dvar boolean selected[1..N];
 dvar float+ average;
 
 int total = sum(dep in 1..D) n[dep];
-float average_factor = (total - 1) * total / 2;
-
-int G[1..D][1..N];
-
-execute {
-	for (var dep = 1; dep <= D; ++dep) {
-		for (var p = 1; p <= N; ++p) {
-			G[dep][p] = (d[p] == dep) ? 1 : 0;
-		}
-	}
-	// Print G
-	for (var dep = 1; dep <= D; ++dep) {
-		for (var p = 1; p <= N; ++p) {
-			write(G[dep][p] + " ");
-		}
-		writeln();
-	}
-}
+float average_factor = (total - 1) * total / 2; // Gauss sum
 
 //<<<<<<<<<<<<<<<<
 
@@ -54,7 +37,7 @@ subject to {
     
 	// 1. Each department dep must have exactly n[dep] participants
 	forall(dep in 1..D)
-		sum(p in 1..N) selected[p] * G[dep][p] == n[dep];
+		sum(p in 1..N: d[p] == dep) selected[p] == n[dep];
         
 	// 2. No incompatible individuals
 	forall(i in 1..N, j in i+1..N: m[i][j] == 0)
