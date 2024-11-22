@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ASCII"?><project>
+    	
+    <version>1.0</version>
+    	
+    <configs>
+        		
+        <config default="true" name="Data1" category="opl">
+            			
+            <ref name="Template.mod" type="model">
+			</ref>
+            			
+            <ref name="Datasets/project.1.dat" type="data">
+			</ref>
+            		
+        </config>
+        		
+        <config default="false" name="Data2" category="opl">
+            			
+            <ref name="Template.mod" type="model">
+			</ref>
+            			
+            <ref name="Datasets/project.2.dat" type="data">
+			</ref>
+            		
+        </config>
+        	
+    </configs>
+    	
+
+</project>
