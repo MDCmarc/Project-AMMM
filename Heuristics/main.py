@@ -1,6 +1,3 @@
-
-
-
 class GreedySolver:
     def __init__(self, D, N, n, d, m):
         self.D = D
@@ -9,14 +6,14 @@ class GreedySolver:
         self.sumN = sum(n)
         self.d = d
         self.m = m
-        self.solution = [-1] * 5
+        self.solution = [-1] * self.sumN
 
     def fitness(self, sol):
         average = 0
         for i in range(self.sumN):
             for j in range(i + 1, self.sumN):
                 average += self.m[sol[i]][sol[j]]
-        average /= 10
+        average /= (self.sumN*(self.sumN-1)/2)
         return average
 
     def sort_group(self, group):
@@ -51,14 +48,14 @@ class GreedySolver:
     def solve(self):
 
         a = list(range(0, N-1))
-        spaces_in_groups = n
-        ranges_in_groups = [[0, 0] for _ in range(len(n))]
-        ranges_in_groups[0] = [0, n[0] - 1]
-        for i in range(1, len(n)):
-            ranges_in_groups[i] = [ranges_in_groups[i-1][1]+1, ranges_in_groups[i-1][1]+n[i]]
+        spaces_in_groups = self.n
+        #ranges_in_groups = [[0, 0] for _ in range(len(n))]
+        #ranges_in_groups[0] = [0, n[0] - 1]
+        #for i in range(1, len(n)):
+        #    ranges_in_groups[i] = [ranges_in_groups[i-1][1]+1, ranges_in_groups[i-1][1]+n[i]]
         
-        print("Ranges in groups:")
-        print(ranges_in_groups)
+        #print("Ranges in groups:")
+        #print(ranges_in_groups)
 
 
         self.sort_group(a)
@@ -68,12 +65,12 @@ class GreedySolver:
             if number >= self.sumN:
                 break
             if self.possible(self.solution, a[i]):
-                for j in range(0, len(n)-1):
-                    if (a[i] >= ranges_in_groups[j][0] and a[i] <= ranges_in_groups[j][1]) and spaces_in_groups[i] > 0:
-                        spaces_in_groups[i] -= 1
-                        self.solution[number] = a[i]
-                        print(f" Added: {a[i] + 1}")
-                        number += 1
+                group_of_i = d[a[i]]-1
+                if n[group_of_i] and spaces_in_groups[group_of_i] > 0:
+                    spaces_in_groups[group_of_i] -= 1
+                    self.solution[number] = a[i]
+                    print(f" Added: {a[i] + 1}")
+                    number += 1
 
         # Final check
         if number != self.sumN:
