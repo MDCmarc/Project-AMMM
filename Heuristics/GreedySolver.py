@@ -17,23 +17,12 @@ class GreedySolver:
         return average
 
     def sort_group(self, group):
-        def sort_func(a1, a2):
-            sum1 = -1
-            for m_a in self.m[a1]:
-                if m_a < 0.15:
-                    sum1 -= (0.15 - m_a)
-                sum1 += m_a
-
-            sum2 = -1
-            for m_a in self.m[a2]:
-                if m_a < 0.15:
-                    sum2 -= (0.15 - m_a)
-                sum2 += m_a
-
-            return sum1 > sum2  # The higher the value, the better
-        
         # Sorting group using the custom sort function
-        group.sort(key=lambda x: sum(-1 if ma < 0.15 else ma + (ma < 0.15) * (0.15 - ma) for ma in self.m[x]), reverse=True)
+        # We penalize those assigments that have <0.15 with anyone , the less afinity they have, the more we penalise -[0,0.15]
+        group.sort(key=lambda x: sum(
+                                    -(0.15 - ma) if ma < 0.15 
+                                    else ma 
+                                    for ma in self.m[x]), reverse=True)
 
         print("Sort:", " ".join(str(s + 1) for s in group))
 
@@ -47,17 +36,8 @@ class GreedySolver:
 
     def solve(self):
 
-        a = list(range(0, self.N-1))
+        a = list(range(0, self.N))
         spaces_in_groups = self.n
-        #ranges_in_groups = [[0, 0] for _ in range(len(n))]
-        #ranges_in_groups[0] = [0, n[0] - 1]
-        #for i in range(1, len(n)):
-        #    ranges_in_groups[i] = [ranges_in_groups[i-1][1]+1, ranges_in_groups[i-1][1]+n[i]]
-        
-        #print("Ranges in groups:")
-        #print(ranges_in_groups)
-
-
         self.sort_group(a)
         number = 0
 
@@ -74,7 +54,7 @@ class GreedySolver:
 
         # Final check
         if number != self.sumN:
-            raise RuntimeError("Could not complete the solution with " + self.sumN + " elements.")
+            print(f" Could not complete the solution with {self.sumN} elements.")
 
     def found(self, i, j):
         for k in range(self.sumN):
@@ -83,11 +63,13 @@ class GreedySolver:
         return False
 
     def print_solution(self):
-        for i in range(5):
+        for i in range(self.sumN):
             for j in range(i + 1, self.sumN):
                 if self.m[self.solution[i]][self.solution[j]] < 0.15:
                     if not self.found(i, j):
-                        raise RuntimeError("Could not complete the solution with 5 elements.")
+                        print(f" Could not complete the solution with {self.sumN} elements.")
+                        return
+
 
         print("Solution:", " ".join(str(s + 1) for s in self.solution))
         print(f"Fitness: {self.fitness(self.solution)}")
