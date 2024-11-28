@@ -24,7 +24,7 @@ class GreedySolver:
                                     else ma 
                                     for ma in self.m[x]), reverse=True)
 
-        print("Sort:", " ".join(str(s + 1) for s in group))
+        # print("Sort:", " ".join(str(s + 1) for s in group))
 
     def possible(self, solution, candidate):
         for s in solution:
@@ -49,7 +49,7 @@ class GreedySolver:
                 if self.n[group_of_i] and spaces_in_groups[group_of_i] > 0:
                     spaces_in_groups[group_of_i] -= 1
                     self.solution[number] = a[i]
-                    print(f" Added: {a[i] + 1}")
+                    # print(f" Added: {a[i] + 1}")
                     number += 1
 
         # Final check
@@ -70,6 +70,5 @@ class GreedySolver:
                         print(f" Could not complete the solution with {self.sumN} elements.")
                         return
 
-
-        print("Solution:", " ".join(str(s + 1) for s in self.solution))
-        print(f"Fitness: {self.fitness(self.solution)}")
+        print(f"OBJECTIVE: {self.fitness(self.solution)}")
+        print("Commission:", " ".join(str(s + 1) for s in self.solution))
