@@ -7,7 +7,7 @@ import glob
 if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     data_dir = os.path.join(script_dir, "Datasets")
-    file_paths = glob.glob(os.path.join(data_dir, "project.*.dat"))
+    file_paths = glob.glob(os.path.join(data_dir, "custom*.txt"))
     
     for path in file_paths:
         D = None
