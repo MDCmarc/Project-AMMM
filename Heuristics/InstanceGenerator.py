@@ -120,7 +120,7 @@ if __name__ == "__main__":
     for i in range(numInstances):
         D = D_Values[i]  # Number of dimensions
         N = N_Values[i]  # Total number of elements
-        output_file = os.path.join(script_dir, "Datasets/custom" + str(custom_file_count) + ".txt")
+        output_file = os.path.join(script_dir, "Datasets/custom" + str(custom_file_count) + ".dat")
 
         n, d, m = generate_and_create_file(output_file, D, N)
         custom_file_count += 1
