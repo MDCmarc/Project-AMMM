@@ -6,80 +6,90 @@
         		
         <config default="true" name="Data1" category="opl">
             			
-            <ref name="Template.mod" type="model">
+            <ref name="Datasets/project.1.dat" type="data">
 			</ref>
             			
-            <ref name="Datasets/project.1.dat" type="data">
+            <ref name="Template.mod" type="model">
 			</ref>
             		
         </config>
         		
         <config default="false" name="Data2" category="opl">
             			
-            <ref name="Template.mod" type="model">
+            <ref name="Datasets/project.2.dat" type="data">
 			</ref>
             			
-            <ref name="Datasets/project.2.dat" type="data">
+            <ref name="Template(linear).mod" type="model">
 			</ref>
             		
         </config>
         		
         <config default="false" name="Data3" category="opl">
             			
-            <ref name="Template.mod" type="model">
+            <ref name="Datasets/project.3.dat" type="data">
 			</ref>
             			
-            <ref name="Datasets/project.3.dat" type="data">
+            <ref name="Template(linear).mod" type="model">
 			</ref>
             		
         </config>
         		
         <config default="false" name="Data4" category="opl">
             			
-            <ref name="Template.mod" type="model">
+            <ref name="Datasets/project.4.dat" type="data">
 			</ref>
             			
-            <ref name="Datasets/project.4.dat" type="data">
+            <ref name="Template(linear).mod" type="model">
 			</ref>
             		
         </config>
         		
         <config default="false" name="Data5" category="opl">
             			
-            <ref name="Template.mod" type="model">
+            <ref name="Datasets/project.5.dat" type="data">
 			</ref>
             			
-            <ref name="Datasets/project.5.dat" type="data">
+            <ref name="Template(linear).mod" type="model">
 			</ref>
             		
         </config>
         		
         <config default="false" name="Data6" category="opl">
             			
-            <ref name="Template.mod" type="model">
+            <ref name="Datasets/project.6.dat" type="data">
 			</ref>
             			
-            <ref name="Datasets/project.6.dat" type="data">
+            <ref name="Template(linear).mod" type="model">
 			</ref>
             		
         </config>
         		
         <config default="false" name="Data7" category="opl">
             			
-            <ref name="Template.mod" type="model">
+            <ref name="Datasets/project.7.dat" type="data">
 			</ref>
             			
-            <ref name="Datasets/project.7.dat" type="data">
+            <ref name="Template(linear).mod" type="model">
 			</ref>
             		
         </config>
         		
         <config default="false" name="Data8" category="opl">
             			
-            <ref name="Template.mod" type="model">
+            <ref name="Datasets/project.8.dat" type="data">
 			</ref>
             			
-            <ref name="Datasets/project.8.dat" type="data">
+            <ref name="Template(linear).mod" type="model">
+			</ref>
+            		
+        </config>
+        		
+        <config default="false" name="Data1-linear" category="opl">
+            			
+            <ref name="Datasets/project.1.dat" type="data">
+			</ref>
+            			
+            <ref name="Template(linear).mod" type="model">
 			</ref>
             		
         </config>
