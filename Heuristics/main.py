@@ -9,6 +9,8 @@ if __name__ == "__main__":
     data_dir = os.path.join(script_dir, "Datasets")
     file_paths = glob.glob(os.path.join(data_dir, "project.*.dat"))
     
+    #custom_path = [os.path.join(data_dir, "project.2.dat")]
+
     for path in file_paths:
         D = None
         n = []
@@ -19,6 +21,6 @@ if __name__ == "__main__":
 
         print(f"File {path}\n################")
         solver = GreedySolver(D, N, n, d, m)
-        solver.solve()
+        solver.solve2()
         solver.print_solution()
         print("\n")
