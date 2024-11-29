@@ -64,10 +64,9 @@ class GreedySolver:
         sum2 = sum(penalized_affinity(self.m[candidate][i])
                     for i in candidates if i != candidate)
 
-        progress_ratio = (self.assigned_count / max(1, self.sumN))  # Progress from 0 to 1
-
+        progress_ratio = self.assigned_count / self.sumN
         weight_sum1 = progress_ratio
-        weight_sum2 = (1 - progress_ratio)
+        weight_sum2 = 1 - progress_ratio
 
         score = weight_sum1 * sum1 + weight_sum2 * sum2
 
@@ -91,7 +90,7 @@ class GreedySolver:
         )
 
     def solve2(self) -> None:
-        candidates = list(range(self.N))  # Initialize the candidate list
+        candidates = list(range(self.N))
         spaces_in_groups = self.n
         self.assigned_count = 0
  
