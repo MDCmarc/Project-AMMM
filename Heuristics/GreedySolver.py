@@ -53,9 +53,9 @@ class GreedySolver:
     def calculate_score(self, candidate: int, candidates: List[int]) -> float:
         def penalized_affinity(value: float) -> float:
             if value < 0.15:
-                return -math.exp((0.15 - value)*5)  # Strong penalty for poor affinity
+                return -math.exp((0.15 - value)*2)  # Strong penalty for poor affinity
             elif value >= 0.85:
-                return value + math.exp((value-0.85)*5)  # Boost for strong affinity
+                return value + math.exp((value-0.85)*2)  # Boost for strong affinity
             return value
 
         sum1 = sum(penalized_affinity(self.m[candidate][i])
