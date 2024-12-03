@@ -8,12 +8,12 @@ import os
 numInstances = 4
 
 # Number of departments (same values => just that value)
-minNumDepartments = 3
-maxNumDepartments = 3
+minNumDepartments = 2
+maxNumDepartments = 2
 
 # Total number of members (same values => just that value)
-minNumMembers = 10
-maxNumMembers = 20
+minNumMembers = 8
+maxNumMembers = 8
 
 ######################################################
 ######################################################
