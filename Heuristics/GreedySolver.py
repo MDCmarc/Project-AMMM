@@ -91,7 +91,7 @@ class GreedySolver:
 
     def solve2(self) -> None:
         candidates = list(range(self.N))
-        spaces_in_groups = self.n
+        spaces_in_groups = self.n.copy()
         self.assigned_count = 0
  
         while self.assigned_count < self.sumN:
@@ -107,10 +107,10 @@ class GreedySolver:
             spaces_in_groups[group_index] -= 1
             self.assigned_count += 1
 
-    def print_solution(self) -> None:
+    def print_solution(self) -> List[int]:
         if self.solution[-1] == -1:
             print(f"An assignment of {self.sumN} elements could not be constructed.")
-            return
+            return []
 
         def middleman_restriction_holds(i: int, j: int) -> bool:
             return any(
@@ -121,10 +121,13 @@ class GreedySolver:
         for i in range(self.sumN):
             for j in range(i + 1, self.sumN):
                 if self.m[self.solution[i]][self.solution[j]] < 0.15:
-                    if not middleman_restriction_holds(i, j):
+                    if not middleman_restriction_holds(self.solution[i], self.solution[j]):
                         print("An assigment was found but the middleman restriction was not met")
-                        return
+                        return  []
 
         self.solution.sort()
         print(f"OBJECTIVE: {self.fitness(self.solution)}")
         print("Commission:", " ".join(str(s + 1) for s in self.solution))
+
+        return self.solution
+    
