@@ -5,61 +5,53 @@ from typing import List
 
 class LocalSearch(BaseSolver):
 
-    def possible(self, sol: List[int]) -> bool:
-        for i in range(self.sumN):
-            for j in range(i + 1, self.sumN):
-                if self.m[sol[i]][sol[j]] <= 0:
-                    return False
-                
-                if self.m[sol[i]][sol[j]] < 0.15:
-                    if not self.middlemanRestrictionHolds(sol, i, j, ):
-                        return False
-        return True
-
-
-    def generate_neighbors(self, sol: List[int]) -> List[List[int]]:
+    def GenerateNeighbors(self, sol: List[int]) -> List[List[int]]:
+        """
+        Generates all valid neighboring solutions by replacing each indivual in the current solution
+        with a candidate from the same departmenty if it is valid.
+        """
         neighbors = []
-        for i in range(len(sol)):
-            department_i = self.d[sol[i]] 
+        sol_set = set(sol) # For better eficiency when checking if candiate is inside solution
 
-            possibles = [j for j in range(len(self.d)) if self.d[j] == department_i]
+        for i, current_candidate in enumerate(sol):
+            department_i = self.d[current_candidate] 
+
+            possibles = [j for j in range(len(self.d)) if self.d[j] == department_i and j not in sol_set]
 
             for candidate in possibles:
-                if candidate in sol:
-                    continue
                 neighbor = sol.copy()
                 neighbor[i] = candidate
-                if self.possible(neighbor):
+
+                if self.SolutionIsValid(neighbor):
                     neighbors.append(neighbor)
         return neighbors
 
-    def solve(self, intitial_solution: List[int],
-              max_iterations=100, max_time=120,
-              cout: bool = True) -> None:
+
+    def Solve(self, initial_solution: List[int], max_iterations=100, max_time=120, output: bool = True) -> List[int]:
+        """
+        Solves the optimization problem using a local search algorithm. The default parameters are 100 iterations and 120 seconds.
+        """
         start_time = time.time()
-        current_solution = intitial_solution
-        current_fitness = self.fitness(current_solution)
+        current_solution = initial_solution
+        current_fitness = self.Fitness(current_solution)
         
-        for _ in range(max_iterations):
-            elapsed_time = time.time() - start_time
-            if elapsed_time >= max_time:
-                print(f"Terminating search after {elapsed_time:.2f} seconds.")
+        for iteration in range(max_iterations):
+            if time.time() - start_time >= max_time:
+                if output:
+                    print(f"Terminating search after {iteration} iterations and {time.time() - start_time:.2f} seconds.")
                 break
         
-            neighbors = self.generate_neighbors(current_solution)
-            best_neighbor = None
-            best_fitness = current_fitness
+            neighbors = self.GenerateNeighbors(current_solution)
+            if not neighbors:
+                break
             
-            for neighbor in neighbors:
-                fitness = self.fitness(neighbor)
-                if fitness > best_fitness:
-                    best_fitness = fitness
-                    best_neighbor = neighbor
+            # Choose the best neighbour
+            best_neighbor = max(neighbors, key=self.Fitness, default=None)
+            best_fitness = self.Fitness(best_neighbor)
 
-            if best_neighbor is not None:
-                current_solution = best_neighbor
-                current_fitness = best_fitness
+            if best_fitness > current_fitness:
+                current_solution, current_fitness = best_neighbor, best_fitness
             else:
                 break  # No improvement, exit early
         
-        return self.checkAndReturnSolution(current_solution, cout)
+        return self.CheckAndReturnSolution(current_solution, output=output)

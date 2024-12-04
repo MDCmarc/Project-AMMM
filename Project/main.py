@@ -29,16 +29,16 @@ if __name__ == "__main__":
         print(f"File {path}\n################")
         
         print("Greedy:")
-        greedy_solution = greedy_solver.solve()
+        greedy_solution = greedy_solver.Solve()
 
         print("LocalSearch:")
-        if greedy_solution != []:
-            local_search_sol = local_search_solver.solve(greedy_solution)
+        if greedy_solution:
+            local_search_sol = local_search_solver.Solve(greedy_solution)
         else: 
             print("\tCan not do Local Search from an empty solution:")
 
 
         print("GRASP:")
-        GRASP_solver.solve()
+        GRASP_solver.Solve()
     
         print("\n")
