@@ -5,10 +5,9 @@ import os
 
 
 # 
-
+FORCE_SOLUTION = False
 N = 300
 D = 20
-
 #
 
 
@@ -51,7 +50,7 @@ def generate_m(solution):
                 value = 1.0  # Diagonal elements set to 1.0
 
             elif (i in solution) and (j in solution):
-                value =  round(random.randint(3, 20) * 0.05, 2) # [0.15 - 1]
+                value =  round(random.randint(2, 20) * 0.05, 2) # [0.15 - 1]
             else:
                 value = round(random.randint(0, 16) * 0.05, 2) # [0. - 0.8]
 
@@ -107,7 +106,7 @@ if __name__ == "__main__":
     
     m = generate_m(solution)
 
-    while(not solutionPossible(solution,m)):
+    while(solutionPossible(solution,m) != FORCE_SOLUTION):
         print("Again")
         m = generate_m(solution)
 
