@@ -1,7 +1,8 @@
 from Parse_Validate import parse_and_validate_input_file
 from solvers import Greedy, LocalSearch, GRASP
 import os
-import glob 
+import glob
+import time
 
 if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -29,16 +30,27 @@ if __name__ == "__main__":
         print(f"File {path}\n################")
         
         print("Greedy:")
+        start_time = time.time()
         greedy_solution = greedy_solver.Solve()
+        end_time = time.time()
+
+        print(f"\tTime: {end_time - start_time:.2f} seconds")
 
         print("LocalSearch:")
+        start_time = time.time()
         if greedy_solution:
             local_search_sol = local_search_solver.Solve(greedy_solution)
         else: 
             print("\tCan not do Local Search from an empty solution:")
+        end_time = time.time()
 
+        print(f"\tTime: {end_time - start_time:.2f} seconds")
 
         print("GRASP:")
+        start_time = time.time()
         GRASP_solver.Solve()
+        end_time = time.time()
+
+        print(f"\tTime: {end_time - start_time:.2f} seconds")
     
         print("\n")
