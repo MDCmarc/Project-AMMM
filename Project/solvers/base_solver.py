@@ -46,13 +46,17 @@ class BaseSolver:
 
         for i in range(self.sumN):
             for j in range(i + 1, self.sumN):
-                if self.m[sol[i]][sol[j]] >= 0.15:
-                    continue
+                if self.m[sol[i]][sol[j]] <= 0:
+                    print(f"\tIncompatibility found!!!")
+                    return []
 
-                if not self.middlemanRestrictionHolds(sol, i,j):
-                    if cout:
-                        print("\tAn assigment was found but the middleman restriction was not met")
-                    return  []
+                if self.m[sol[i]][sol[j]] < 0.15:
+                    if not self.middlemanRestrictionHolds(sol, i,j):
+                        if cout:
+                            print("\tAn assigment was found but the middleman restriction was not met")
+                        return  []
+
+
 
         sol.sort()
         if cout:
