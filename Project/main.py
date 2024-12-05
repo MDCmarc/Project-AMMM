@@ -7,7 +7,7 @@ import time
 if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     data_dir = os.path.join(script_dir, "Datasets")
-    file_paths = glob.glob(os.path.join(data_dir, "*.dat"))
+    file_paths = glob.glob(os.path.join(data_dir, "custom*.dat"))
     
     # custom_path = [os.path.join(data_dir, "custom0.dat")]
 
