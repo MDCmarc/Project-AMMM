@@ -14,7 +14,6 @@ class GRASP(BaseSolver):
         self.greedy_solver = Greedy(D, N, n, d, m)
         self.local_search_solver = LocalSearch(D, N, n, d, m)
         self.alpha = alpha
-        print(self.alpha)
 
     def ConstructRCL(self, candidates: List[int], solution: List[int], assigned_count: int) -> List[int]:
         """
