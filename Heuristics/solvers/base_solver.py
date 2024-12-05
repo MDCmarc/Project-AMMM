@@ -58,16 +58,18 @@ class BaseSolver:
                         return False
         return True
 
-    def CheckAndReturnSolution(self, sol: List[int], output: bool = False) -> List[int]:
+    def CheckAndReturnSolution(self, sol: List[int], output: bool = False) -> tuple[float, List[int]]:
         """
         Validates the solution `sol` and, if valid, prints the objective and returns the solution.
         Otherwise, it returns an empty list.
         """
         if not self.SolutionIsValid(sol, output):
-            return []
+            return -1, []
 
+        fitness = self.Fitness(sol)
         sol.sort()
+
         if output:
-            print(f"\tOBJECTIVE: {self.Fitness(sol)}")
+            print(f"\tOBJECTIVE: {fitness}")
             print("\tCommission:", " ".join(str(s + 1) for s in sol))
-        return sol
+        return fitness, sol

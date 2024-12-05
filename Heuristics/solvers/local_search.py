@@ -27,7 +27,8 @@ class LocalSearch(BaseSolver):
                     neighbors.append(neighbor)
         return neighbors
 
-    def Solve(self, initial_solution: List[int], max_iterations=100, max_time=120, output: bool = True) -> List[int]:
+    def Solve(self, initial_solution: List[int], max_iterations=100, max_time=120,
+              output: bool = True) -> tuple[float, List[int]]:
         """
         Solves the optimization problem using a local search algorithm.
         The default parameters are 100 iterations and 120 seconds.

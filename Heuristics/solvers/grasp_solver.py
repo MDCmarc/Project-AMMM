@@ -9,11 +9,12 @@ from typing import List
 
 
 class GRASP(BaseSolver):
-    def __init__(self, D, N, n, d, m):
+    def __init__(self, D, N, n, d, m, alpha=0.7):
         super().__init__(D, N, n, d, m)
         self.greedy_solver = Greedy(D, N, n, d, m)
         self.local_search_solver = LocalSearch(D, N, n, d, m)
-        self.alpha = 0.7
+        self.alpha = alpha
+        print(self.alpha)
 
     def ConstructRCL(self, candidates: List[int], solution: List[int], assigned_count: int) -> List[int]:
         """
@@ -29,7 +30,7 @@ class GRASP(BaseSolver):
         q_max = sorted_candidates[0][1]
         q_min = sorted_candidates[-1][1]
 
-        threshold = q_max - self.alpha * (q_max - q_min)
+        threshold = q_max - self.alpha * (q_max - q_min)  # We are doing a RCL_max
 
         RCL = [candidate for candidate, score in sorted_candidates if score >= threshold]
 
@@ -61,9 +62,9 @@ class GRASP(BaseSolver):
             n[self.d[selected_candidate] - 1] -= 1
             assigned_count += 1
 
-        return self.CheckAndReturnSolution(solution, output=False)
+        return self.CheckAndReturnSolution(solution, output=False)[1]
 
-    def Solve(self, max_iterations=200, max_time=500) -> List[int]:
+    def Solve(self, max_iterations=100, max_time=500) -> tuple[float, List[int]]:
         """
         Solves the optimization problem using a greedy algorithm.
         The default parameters are 200 iterations and 500 seconds.
@@ -80,8 +81,7 @@ class GRASP(BaseSolver):
             if not new_solution:
                 continue
 
-            new_solution = self.local_search_solver.Solve(new_solution, output=False)
-            new_fitness = self.Fitness(new_solution)
+            new_fitness, new_solution = self.local_search_solver.Solve(new_solution, output=False)
 
             if new_fitness > best_fitness:
                 best_solution, best_fitness = new_solution, new_fitness

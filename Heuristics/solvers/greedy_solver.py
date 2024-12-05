@@ -57,7 +57,7 @@ class Greedy(BaseSolver):
             not self.NeedsMiddlemanAndNotFound(candidate, candidates, solution)
         ]
 
-    def Solve(self) -> List[int]:
+    def Solve(self) -> tuple[float, List[int]]:
         """
         Solves the optimization problem using a greedy algorithm.
         """

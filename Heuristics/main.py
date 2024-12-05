@@ -21,14 +21,14 @@ if __name__ == "__main__":
 
         greedy_solver = Greedy(D, N, n, d, m)
         local_search_solver = LocalSearch(D, N, n, d, m)
-        GRASP_solver = GRASP(D, N, n, d, m)
+        GRASP_solver = GRASP(D, N, n, d, m, alpha=0.1)
 
         print(f"File {path}\n################")
 
         # ------------------ Greedy Solver ------------------
         print("Greedy:")
         start_time = time.time()
-        greedy_solution = greedy_solver.Solve()
+        _, greedy_solution = greedy_solver.Solve()
         end_time = time.time()
 
         print(f"\tTime: {end_time - start_time:.2f} seconds")
@@ -38,7 +38,7 @@ if __name__ == "__main__":
         print("LocalSearch:")
         start_time = time.time()
         if greedy_solution:
-            local_search_sol = local_search_solver.Solve(greedy_solution)
+            _, local_search_sol = local_search_solver.Solve(greedy_solution)
         else:
             print("\tCan not do Local Search from an empty solution:")
         end_time = time.time()
@@ -49,7 +49,7 @@ if __name__ == "__main__":
         # ---------------------- GRASP ----------------------
         print("GRASP:")
         start_time = time.time()
-        grasp_sol = GRASP_solver.Solve()
+        _, grasp_sol = GRASP_solver.Solve()
         end_time = time.time()
 
         print(f"\tTime: {end_time - start_time:.2f} seconds")
