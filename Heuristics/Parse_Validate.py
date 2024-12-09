@@ -3,20 +3,18 @@ def parse_and_validate_input_file(file_path):
     with open(file_path, 'r') as file:
         lines = file.readlines()
 
-    # Initialize variables
     D = None
     n = []
     N = None
     d = []
     m = []
 
-    # Helper function to raise an error
     def raise_error(message):
         raise ValueError(f"Error in file: {message}")
 
     # Parse each line
     for i, line in enumerate(lines):
-        line = line.strip().rstrip(";")  # Remove trailing whitespace and semicolon
+        line = line.strip().rstrip(";")
 
         if line.startswith("D ="):
             try:
@@ -55,7 +53,6 @@ def parse_and_validate_input_file(file_path):
                 raise_error(f"Invalid format for 'd' (line {i+1}).")
 
         elif line.startswith("m = ["):
-            # Begin reading the matrix
             matrix_start = i + 1
             for j, matrix_line in enumerate(lines[matrix_start:], start=matrix_start):
                 matrix_line = matrix_line.strip().rstrip(";")
@@ -69,7 +66,6 @@ def parse_and_validate_input_file(file_path):
                 except ValueError:
                     raise_error(f"Invalid format in matrix row {j-matrix_start+1} (line {j+1}).")
 
-    # Final validations
     if len(m) != N:
         raise_error("The matrix 'm' must have 'N' rows.")
 

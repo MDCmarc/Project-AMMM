@@ -86,7 +86,7 @@ def generate_and_create_file(m, solution):
             file.write(f"    [ {' '.join(f'{x:.2f}' for x in row)} ]\n")
         file.write("];\n")
 
-        file.write(f"solution = [ {' '.join(map(str, solution))} ];\n\n")
+        #file.write(f"solution = [ {' '.join(map(str, solution))} ];\n\n")
 
     print(f"File '{output_file}' created successfully.")
 

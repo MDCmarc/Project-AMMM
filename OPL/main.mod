@@ -2,7 +2,7 @@ main {
 	var start = new Date();
     var startTime = start.getTime();
 	
-	var src = new IloOplModelSource("Template(linear).mod");
+	var src = new IloOplModelSource("Solver.mod");
 	var def = new IloOplModelDefinition(src);
 	var cplex = new IloCplex();
 	var model = new IloOplModel(def, cplex);

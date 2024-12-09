@@ -9,7 +9,7 @@ from typing import List
 
 
 class GRASP(BaseSolver):
-    def __init__(self, D, N, n, d, m, alpha=0.7):
+    def __init__(self, D, N, n, d, m, alpha=0.3):  # Shown to yield best results
         super().__init__(D, N, n, d, m)
         self.greedy_solver = Greedy(D, N, n, d, m)
         self.local_search_solver = LocalSearch(D, N, n, d, m)
@@ -61,9 +61,9 @@ class GRASP(BaseSolver):
             n[self.d[selected_candidate] - 1] -= 1
             assigned_count += 1
 
-        return self.CheckAndReturnSolution(solution, output=False)[1]
+        return self.CheckAndReturnSolution(solution, output=False)
 
-    def Solve(self, max_iterations=100, max_time=500) -> tuple[float, List[int]]:
+    def Solve(self, max_iterations=200, max_time=500) -> tuple[float, List[int]]:
         """
         Solves the optimization problem using a greedy algorithm.
         The default parameters are 200 iterations and 500 seconds.
@@ -76,7 +76,7 @@ class GRASP(BaseSolver):
                 print(f"Terminating search after {iteration} iterations and {time.time() - start_time:.2f} seconds.")
                 break
 
-            new_solution = self.DoConstructionPhase()
+            _, new_solution = self.DoConstructionPhase()
             if not new_solution:
                 continue
 
