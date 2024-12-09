@@ -13,13 +13,13 @@ float      m[1..N][1..N] = ...;
 // You can run an execute block if needed.
 
 //>>>>>>>>>>>>>>>>
-dvar boolean selected[1..N];
-dvar float+ average;
 
-dvar boolean selected_pair[1..N][1..N];
+dvar boolean x[1..N];
+dvar boolean y[1..N][1..N];
+dvar float+ z;
 
-int total = sum(dep in 1..D) n[dep];
-float average_factor = (total - 1) * total / 2; // Gauss sum
+int T = sum(dep in 1..D) n[dep];
+float G = (T - 1) * T / 2; // Gauss sum
 
 //<<<<<<<<<<<<<<<<
 
@@ -28,7 +28,9 @@ float average_factor = (total - 1) * total / 2; // Gauss sum
 // Write here the objective function.
 
 //>>>>>>>>>>>>>>>>
-maximize average;
+
+maximize z;
+
 //<<<<<<<<<<<<<<<<
 
 subject to {
@@ -39,29 +41,29 @@ subject to {
     
 	// 1. Each department dep must have exactly n[dep] participants
 	forall(dep in 1..D)
-		sum(p in 1..N: d[p] == dep) selected[p] == n[dep];
+		sum(p in 1..N: d[p] == dep) x[p] == n[dep];
         
 	// 2. No incompatible individuals
 	forall(i in 1..N, j in i+1..N: m[i][j] == 0)
-		selected[i] + selected[j] <= 1;
+		x[i] + x[j] <= 1;
 	
 	// 3. Middleman friend
 	forall(i in 1..N, j in i+1..N: 0 < m[i][j] < 0.15) {
 		sum(k in 1..N: k != i && k != j && m[i][k] > 0.85 && m[k][j] > 0.85) 
-			selected[k] >= selected[i] + selected[j] - 1; // if both are selected, from all individuals, at least a friend must be selected
+			x[k] >= x[i] + x[j] - 1;
 	}
 	
 	// 5. Linear:
 	forall(i in 1..N, j in i+1..N) {
-	    selected_pair[i][j] <= selected[i];
-	    selected_pair[i][j] <= selected[j];
-	    selected_pair[i][j] >= selected[i] + selected[j] - 1; 
-  }
+	    y[i][j] <= x[i];
+	    y[i][j] <= x[j];
+	    y[i][j] >= x[i] + x[j] - 1; 
+  	}
 	
 	// 4. Average compatibility
-	average <= 
-		(sum(i in 1..N, j in i+1..N) selected_pair[i][j] * m[i][j]) 
-		/ average_factor;
+	z <= 
+		(sum(i in 1..N, j in i+1..N) y[i][j] * m[i][j]) 
+		/ G;
       
     //<<<<<<<<<<<<<<<<
 }
@@ -73,7 +75,7 @@ execute {
 	writeln("The commission is formed by: ");
 	write("{");
 	for (var i = 1; i <= N; ++i) {
-		if (selected[i] == 1) {
+		if (x[i] == 1) {
 			write(i + ", ");
 		}
 	}
@@ -81,10 +83,10 @@ execute {
 
 	var total = 0.0;
 	for (var i = 1; i <= N; ++i) {
-		if (selected[i] == 1) {
+		if (x[i] == 1) {
 			writeln("Selected person: " + i);
 			for (var j = i + 1; j <= N; ++j) {
-				if (selected[j] == 1) {
+				if (x[j] == 1) {
 					total += m[i][j];
 					writeln("     with: " + j + " is " + m[i][j]);
 				}
@@ -92,6 +94,6 @@ execute {
 		}
 	}
 	writeln("Total compatibility score: " + total);
-	writeln("Average compatibility: " + total / average_factor);
+	writeln("Average compatibility: " + total / G);
 }
 //<<<<<<<<<<<<<<<<

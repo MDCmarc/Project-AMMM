@@ -6,7 +6,7 @@ main {
 	var def = new IloOplModelDefinition(src);
 	var cplex = new IloCplex();
 	var model = new IloOplModel(def, cplex);
-	var data = new IloOplDataSource("Datasets/custom7.dat");
+	var data = new IloOplDataSource("Datasets/n25custom.dat");
 	
 	model.addDataSource(data);
 	model.generate();
@@ -18,10 +18,12 @@ main {
 	    writeln("OBJECTIVE: " +cplex.getObjValue() )
 		writeln("The selected members are : ");
 		write("{");
+		var first = true;
 		for (var i = 1; i <= model.N; ++i) {
-		    if (model.selected[i] == 1) {
-			    if (i == 1) {
-			  	  write(i);
+		    if (model.x[i] == 1) {
+			    if (first) {
+			  	    write(i);
+			  	    first = false;
 			    } else {
 			    	write(", " + i);
 			    }
